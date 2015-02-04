@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1165.robot;
 
 import org.usfirst.frc.team1165.robot.commands.Rotate;
+import org.usfirst.frc.team1165.robot.commands.RotateToHeading;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -48,6 +49,8 @@ public class OI
         SmartDashboard.putNumber("Target Angle", 45);
         
         SmartDashboard.putData(new Rotate("Target Angle"));
+        
+        SmartDashboard.putData(new RotateToHeading("Rotate Magnitude", "Brake Heading", "Target Heading", "Creep Magnitude"));
 	}
 
 	public double getDampening()
