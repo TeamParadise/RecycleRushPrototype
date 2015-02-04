@@ -25,9 +25,8 @@ public class Rotate extends Command
 		SmartDashboard.putNumber("Rotate Magnitude", .2);
 	}
 
-	public double getAdjustedTarget()
+	public double getTargetAdjustment()
 	{
-
 		if (Math.abs(rotateMagnitude) < 0.4)
 			return 1 * sign;
 		if (Math.abs(rotateMagnitude) < 0.7)
@@ -59,7 +58,7 @@ public class Rotate extends Command
 	protected void execute()
 	{
 		if (Math.abs(Robot.gyroscope.getHeading()) < Math.abs(targetAngle
-				- getAdjustedTarget()))
+				- getTargetAdjustment()))
 		{
 			Robot.driveTrain.driveCartesian(0, 0, rotateMagnitude, 0);
 		}
