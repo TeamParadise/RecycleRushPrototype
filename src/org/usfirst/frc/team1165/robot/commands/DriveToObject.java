@@ -21,7 +21,7 @@ public class DriveToObject extends Command
 	private double creepMagnitude;
 
 	private double currentRange;
-	private double previousRange;
+	private double previousRange = 0;
 	private double twistCorrection;
 	
 	private boolean isCreeping;

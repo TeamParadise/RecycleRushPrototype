@@ -21,7 +21,7 @@ public class RotateToHeading extends Command
 	private double creepMagnitude;
 
 	private double currentHeading;
-	private double previousHeading;
+	private double previousHeading = 0;
 	private boolean isCreeping;
 	private double sign;
 
@@ -52,8 +52,16 @@ public class RotateToHeading extends Command
 		}
 		
 		Robot.gyroscope.reset();
+		
 		isCreeping = false;
-
+		
+		// If our target is within braking range, do not start driving, 
+		// but creep to the target instead.
+		if (targetHeading < brakeHeading)
+		{
+			isCreeping = true;
+		}
+		
 		sign = targetHeading < 0 ? -1 : 1;
 		
 		rotateMagnitude = sign*rotateMagnitude;
