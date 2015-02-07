@@ -4,7 +4,6 @@ import org.usfirst.frc.team1165.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 /**
  *
  */
@@ -65,19 +64,20 @@ public class RotateToHeading extends Command
 		sign = targetHeading < 0 ? -1 : 1;
 		
 		rotateMagnitude = sign*rotateMagnitude;
+		creepMagnitude = sign*creepMagnitude;
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute()
 	{
 		SmartDashboard.putBoolean("Is creeping", isCreeping);
-		
+
 		// We rotate until we reach brakeRange.
 		// We then reverse the motors until we come to a stop.
 		// We then rotate creepily until we reach range.
 		currentHeading = Robot.gyroscope.getHeading();
 		
-		if (Math.abs(currentHeading) < Math.abs(brakeHeading))
+		if (Math.abs(currentHeading) < (Math.abs(targetHeading) - Math.abs(brakeHeading)))
 		{
 			Robot.driveTrain.driveCartesian(0, 0, rotateMagnitude, 0);
 		}
@@ -88,7 +88,7 @@ public class RotateToHeading extends Command
 		else
 		{ 
 			isCreeping = true;
-			Robot.driveTrain.driveCartesian(0, 0, sign*creepMagnitude, 0);
+			Robot.driveTrain.driveCartesian(0, 0, creepMagnitude, 0);
 		}
 
 		previousHeading = currentHeading;
