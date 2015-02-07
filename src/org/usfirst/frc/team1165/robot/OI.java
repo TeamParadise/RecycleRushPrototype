@@ -41,21 +41,22 @@ public class OI
 	// button.whenReleased(new ExampleCommand());
 
 	private final Joystick mainJoystick = new Joystick(RobotMap.joystickPort1);
-	
+
 	public OI()
 	{
-        SmartDashboard.putNumber("Dampening", .9);
-        
-        SmartDashboard.putNumber("Target Angle", 45);
+		SmartDashboard.putNumber("Dampening", .9);
 
-        SmartDashboard.putNumber("Target Heading", 45);
-        SmartDashboard.putNumber("Brake Heading", 10);
-        SmartDashboard.putNumber("Rotate Magnitude", .4);
-        SmartDashboard.putNumber("Creep Magnitude", .2);
-        
-        SmartDashboard.putData(new Rotate("Target Angle"));
-        
-        SmartDashboard.putData(new RotateToHeading("Rotate Magnitude", "Brake Heading", "Target Heading", "Creep Magnitude"));
+		SmartDashboard.putNumber("Target Angle", 45);
+
+		SmartDashboard.putNumber("Target Heading", 45);
+		SmartDashboard.putNumber("Brake Heading", 10);
+		SmartDashboard.putNumber("Rotate Magnitude", .4);
+		SmartDashboard.putNumber("Creep Magnitude", .2);
+
+		SmartDashboard.putData(new Rotate("Target Angle"));
+
+		SmartDashboard.putData(new RotateToHeading("Rotate Magnitude", "Brake Heading", "Target Heading",
+				"Creep Magnitude"));
 	}
 
 	public double getDampening()

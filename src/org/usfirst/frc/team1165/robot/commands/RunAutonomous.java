@@ -16,8 +16,6 @@ public class RunAutonomous extends CommandGroup
 		SmartDashboard.putNumber("Brake Range", 50.0);
 		SmartDashboard.putNumber("Target Range", 19.0);
 		SmartDashboard.putNumber("Rotate Speed", 1);
-		SmartDashboard.putNumber("Brake Heading", 10.0);
-		SmartDashboard.putNumber("Target Heading", 0.0);
 		SmartDashboard.putNumber("Creep Speed", -0.1);
 
 		// Add elements to smart dashboard for driving sideways:
