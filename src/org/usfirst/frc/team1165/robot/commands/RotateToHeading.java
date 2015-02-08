@@ -34,6 +34,17 @@ public class RotateToHeading extends Command
 		this.creepMagnitudeKey = creepMagnitudeKey;
 	}
 
+	public RotateToHeading(double rotateMagnitude, double brakeHeading, double targetHeading, double creepMagnitude)
+	{
+		requires(Robot.driveTrain);
+
+		this.brakeHeading = brakeHeading;
+		this.targetHeading = targetHeading;
+		this.rotateMagnitude = rotateMagnitude;
+		this.creepMagnitude = creepMagnitude;
+		rotateMagnitudeKey = null;
+	}
+
 	public double getTargetAdjustment()
 	{
 		return 0;

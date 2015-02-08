@@ -43,6 +43,16 @@ public class DriveToObject extends Command
 		this.creepMagnitudeKey = creepMagnitudeKey;
 	}
 
+	public DriveToObject(double forwardMagnitude, double brakeRange, double targetRange, double creepMagnitude)
+	{
+		requires(Robot.driveTrain);
+		this.forwardMagnitude = forwardMagnitude;
+		this.brakeRange = brakeRange;
+		this.targetRange = targetRange;
+		this.creepMagnitude = creepMagnitude;
+		forwardMagnitudeKey = null;
+	}
+
 	// Called just before this Command runs the first time
 	protected void initialize()
 	{

@@ -36,6 +36,6 @@ public class RobotMap
     public static final int joystickPort2          = 2;
     
     //Encoder 
-    public static final int encoderChannelA			= 1;
-    public static final int encoderChannelB			= 2;
+    public static final int encoderChannelA			= 8;
+    public static final int encoderChannelB			= 9;
 }

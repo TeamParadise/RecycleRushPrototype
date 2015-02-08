@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 import org.usfirst.frc.team1165.robot.commands.RunAutonomous;
 import org.usfirst.frc.team1165.robot.subsystems.DriveTrain;
-//import org.usfirst.frc.team1165.robot.subsystems.EncoderInit;
+import org.usfirst.frc.team1165.robot.subsystems.QuadEncoder;
 import org.usfirst.frc.team1165.robot.subsystems.Gyroscope;
 import org.usfirst.frc.team1165.robot.subsystems.RangeFinder;
 
@@ -23,7 +23,7 @@ public class Robot extends IterativeRobot
 	public static final DriveTrain driveTrain = new DriveTrain();
 	public static final RangeFinder rangeFinder = new RangeFinder();
 	public static final Gyroscope gyroscope = new Gyroscope();
-	//public static final EncoderInit encoderinit = new EncoderInit();
+	public static final QuadEncoder quadEncoder = new QuadEncoder();
 	public static OI oi;
 
 	Command autonomousCommand;
