@@ -19,6 +19,7 @@ public class DriveToObject extends Command
 	private double brakeRange;
 	private double targetRange;
 	private double creepMagnitude;
+	private double neverMore;
 
 	private double currentRange;
 	private double previousRange = 0;
@@ -43,13 +44,14 @@ public class DriveToObject extends Command
 		this.creepMagnitudeKey = creepMagnitudeKey;
 	}
 
-	public DriveToObject(double forwardMagnitude, double brakeRange, double targetRange, double creepMagnitude)
+	public DriveToObject(double forwardMagnitude, double brakeRange, double targetRange, double creepMagnitude, double neverMore)
 	{
 		requires(Robot.driveTrain);
 		this.forwardMagnitude = forwardMagnitude;
 		this.brakeRange = brakeRange;
 		this.targetRange = targetRange;
 		this.creepMagnitude = creepMagnitude;
+		this.neverMore = neverMore;
 		forwardMagnitudeKey = null;
 	}
 
@@ -64,9 +66,10 @@ public class DriveToObject extends Command
 			targetRange = SmartDashboard.getNumber(targetRangeKey);
 			creepMagnitude = SmartDashboard.getNumber(creepMagnitudeKey);
 		}
-		
+		Robot.quadEncoder.reset();
 		Robot.gyroscope.reset();
 		isCreeping = false;
+		previousRange = 0;
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -100,7 +103,7 @@ public class DriveToObject extends Command
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished()
 	{
-		return Robot.rangeFinder.getRange() <= targetRange;
+		return Robot.rangeFinder.getRange() <= targetRange || (Math.abs(Robot.quadEncoder.getInches()) >= neverMore);
 	}
 
 	// Called once after isFinished returns true

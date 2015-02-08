@@ -77,7 +77,7 @@ public class OI
 		SmartDashboard.putNumber("Target Range", 19);
 		SmartDashboard.putNumber("Brake Range", 50);
 		SmartDashboard.putNumber("Forward Speed", -1);
-		SmartDashboard.putNumber("Creep Speed", -.1);
+		SmartDashboard.putNumber("Creep Speed", -.2);
 		SmartDashboard.putData(new DriveToObject("Forward Speed", "Brake Range", "Target Range", "Creep Speed"));
 
 	}

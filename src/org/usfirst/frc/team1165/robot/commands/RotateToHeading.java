@@ -20,7 +20,7 @@ public class RotateToHeading extends Command
 	private double creepMagnitude;
 
 	private double currentHeading;
-	private double previousHeading = 0;
+	private double previousHeading = 0; 
 	private boolean isCreeping;
 	private double sign;
 
@@ -76,6 +76,7 @@ public class RotateToHeading extends Command
 		
 		rotateMagnitude = sign*rotateMagnitude;
 		creepMagnitude = sign*creepMagnitude;
+		previousHeading = 0;
 	}
 
 	// Called repeatedly when this Command is scheduled to run
