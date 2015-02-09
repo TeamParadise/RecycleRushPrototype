@@ -67,7 +67,7 @@ public class RotateToHeading extends Command
 		
 		// If our target is within braking range, do not start driving, 
 		// but creep to the target instead.
-		if (targetHeading < brakeHeading)
+		if (Math.abs(targetHeading) < Math.abs(brakeHeading))
 		{
 			isCreeping = true;
 		}
