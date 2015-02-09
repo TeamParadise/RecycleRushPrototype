@@ -6,9 +6,6 @@ import org.usfirst.frc.team1165.robot.commands.ReportGyroscope;
 import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-/**
- *
- */
 public class Gyroscope extends Subsystem
 {
 	private Gyro gyro;
@@ -38,7 +35,6 @@ public class Gyroscope extends Subsystem
 
 	public double getTwistCorrection()
 	{
-
 		angle = getHeading();
 
 		if (angle > bigAngle)

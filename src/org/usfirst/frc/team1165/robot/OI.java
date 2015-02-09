@@ -1,12 +1,9 @@
 package org.usfirst.frc.team1165.robot;
  
-import org.usfirst.frc.team1165.robot.commands.DriveSidewaysDistance;
 import org.usfirst.frc.team1165.robot.commands.DriveStraight;
 import org.usfirst.frc.team1165.robot.commands.DriveStraightDistance;
-import org.usfirst.frc.team1165.robot.commands.DriveStraightTicks;
 import org.usfirst.frc.team1165.robot.commands.DriveToObject;
 import org.usfirst.frc.team1165.robot.commands.ReportEncoder;
-import org.usfirst.frc.team1165.robot.commands.Rotate;
 import org.usfirst.frc.team1165.robot.commands.RotateToHeading;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -52,9 +49,6 @@ public class OI
 	{
 		SmartDashboard.putNumber("Dampening", .9);
 	
- 
-		//SmartDashboard.putNumber("Target Angle", 45);
-
 		SmartDashboard.putNumber("Target Heading", 45);
 		SmartDashboard.putNumber("Brake Heading", 10);
 		SmartDashboard.putNumber("Rotate Magnitude", .4);
@@ -62,17 +56,11 @@ public class OI
 		SmartDashboard.putData(new RotateToHeading("Rotate Magnitude", "Brake Heading", "Target Heading",
 				"Creep Magnitude"));
 
-		//SmartDashboard.putData(new Rotate("Target Angle"));
-
 		SmartDashboard.putNumber("Straight Magnitude", .4); 
 		SmartDashboard.putData(new DriveStraight("Straight Magnitude", .5));
 
-		SmartDashboard.putNumber("Straight Ticks", 250);
-		SmartDashboard.putData(new DriveStraightTicks("Straight Magnitude", "Straight Ticks"));
-
 		SmartDashboard.putNumber("Straight Inches", 53);
 		SmartDashboard.putData(new DriveStraightDistance("Straight Magnitude", "Straight Inches"));
-		SmartDashboard.putData(new DriveSidewaysDistance("Straight Magnitude", "Straight Inches"));
 
 		SmartDashboard.putNumber("Target Range", 19);
 		SmartDashboard.putNumber("Brake Range", 50);

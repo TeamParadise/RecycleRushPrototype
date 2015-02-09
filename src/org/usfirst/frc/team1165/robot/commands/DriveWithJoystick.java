@@ -7,11 +7,6 @@ package org.usfirst.frc.team1165.robot.commands;
 import org.usfirst.frc.team1165.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- * Drives the robot using input from the joysticks.
- * 
- * @author student
- */
 public class DriveWithJoystick extends Command
 {
     public DriveWithJoystick()
@@ -38,7 +33,6 @@ public class DriveWithJoystick extends Command
         Robot.driveTrain.driveCartesian(calX, calY, calTwist, 0);
     }
     
-    // This command never finishes.
     protected boolean isFinished() 
     {
         return false;
@@ -54,7 +48,6 @@ public class DriveWithJoystick extends Command
         stop();
     }
     
-    /** Stop all drive motion */
     private void stop()
     {
         Robot.driveTrain.driveCartesian(0, 0, 0, 0);

@@ -7,9 +7,6 @@ import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.Ultrasonic.Unit;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-/**
- *
- */
 public class RangeFinder extends Subsystem
 {
 	private Ultrasonic ultrasonic;
@@ -25,9 +22,6 @@ public class RangeFinder extends Subsystem
 	{
 		return ultrasonic.getRangeInches();
 	}
-
-	// Put methods for controlling this subsystem
-	// here. Call these from Commands.
 
 	public void initDefaultCommand()
 	{

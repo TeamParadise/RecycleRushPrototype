@@ -8,9 +8,6 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.team1165.robot.RobotMap;
 import org.usfirst.frc.team1165.robot.commands.DriveWithJoystick;
 
-/**
- *
- */
 public class DriveTrain extends Subsystem
 {
 	private RobotDrive robotDrive;
@@ -29,21 +26,6 @@ public class DriveTrain extends Subsystem
 		robotDrive.setExpiration(0.1);
 	}
 
-	// Put methods for controlling this subsystem
-	// here. Call these from Commands.
-
-	/**
-	 * Drives in a Cartesian coordinate field
-	 * 
-	 * @param x
-	 *            X "speed"
-	 * @param y
-	 *            Y "speed"
-	 * @param twist
-	 *            Spin "speed"
-	 * @param gyroAngle
-	 *            Gyro angle
-	 */
 	public void driveCartesian(double x, double y, double twist, double gyroAngle)
 	{
 		robotDrive.mecanumDrive_Cartesian(x, y, twist, gyroAngle);
@@ -51,8 +33,6 @@ public class DriveTrain extends Subsystem
 
 	public void initDefaultCommand()
 	{
-		// Set the default command for a subsystem here.
-		// setDefaultCommand(new MySpecialCommand());
 		setDefaultCommand(new DriveWithJoystick());
 	}
 }

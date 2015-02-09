@@ -5,9 +5,6 @@ import org.usfirst.frc.team1165.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-/**
- *
- */
 public class DriveToObject extends Command
 {
 	private String forwardMagnitudeKey;
@@ -22,19 +19,11 @@ public class DriveToObject extends Command
 	private double neverMore;
 
 	private double currentRange;
-	private double previousRange = 0;
+	private double previousRange;
 	private double twistCorrection;
 	
 	private boolean isCreeping;
 	
-	/**
-	 * Uses values from the smart dashboard to drive the robot
-	 * 
-	 * @param forwardMagnitudeKey
-	 * @param directionKey
-	 * @param timeoutKey
-	 * @param rotationKey
-	 */
 	public DriveToObject(String forwardMagnitudeKey, String brakeRangeKey, String targetRangeKey, String creepMagnitudeKey)
 	{
 		requires(Robot.driveTrain);
@@ -55,10 +44,8 @@ public class DriveToObject extends Command
 		forwardMagnitudeKey = null;
 	}
 
-	// Called just before this Command runs the first time
 	protected void initialize()
 	{
-		// See if we are using values from the smart dashboard:
 		if (null != forwardMagnitudeKey)
 		{
 			forwardMagnitude = SmartDashboard.getNumber(forwardMagnitudeKey);
@@ -72,7 +59,6 @@ public class DriveToObject extends Command
 		previousRange = 0;
 	}
 
-	// Called repeatedly when this Command is scheduled to run
 	protected void execute()
 	{
 		SmartDashboard.putBoolean("Is creeping", isCreeping);
@@ -100,20 +86,16 @@ public class DriveToObject extends Command
 		previousRange = currentRange;
 	}
 
-	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished()
 	{
 		return Robot.rangeFinder.getRange() <= targetRange || (Math.abs(Robot.quadEncoder.getInches()) >= neverMore);
 	}
 
-	// Called once after isFinished returns true
 	protected void end()
 	{
 		Robot.driveTrain.driveCartesian(0, 0, 0, 0);
 	}
 
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
 	protected void interrupted()
 	{
 		end();

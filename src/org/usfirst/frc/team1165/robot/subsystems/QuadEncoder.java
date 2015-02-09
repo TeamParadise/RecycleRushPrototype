@@ -15,8 +15,6 @@ public class QuadEncoder extends Subsystem {
 	
 	private Encoder encoder;
     
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
 	public QuadEncoder()
 	{
 		encoder = new Encoder(RobotMap.encoderChannelA, RobotMap.encoderChannelB, true, EncodingType.k4X );
@@ -25,13 +23,11 @@ public class QuadEncoder extends Subsystem {
 
     public void initDefaultCommand() 
     {
-        // Set the default command for a subsystem here.
         setDefaultCommand(new ReportEncoder());
     }
     
     public void report()
     {
-    	//encoder.getDistance();
     	double distancePerTick = 6*Math.PI/280;
     	SmartDashboard.putNumber("Encoder Tick Distance", getTicks());
     	SmartDashboard.putNumber("Encoder Distance", distancePerTick*getTicks());
@@ -59,4 +55,3 @@ public class QuadEncoder extends Subsystem {
     	encoder.reset();
     }
 }
-
