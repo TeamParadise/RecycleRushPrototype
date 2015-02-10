@@ -9,12 +9,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class RotateToHeading extends Command
 {
-	private String brakeHeadingKey;
+	private String brakeOffsetKey;
 	private String targetHeadingKey;
 	private String rotateMagnitudeKey;
 	private String creepMagnitudeKey;
 
-	private double brakeHeading;
+	private double brakeOffset;
 	private double targetHeading;
 	private double rotateMagnitude;
 	private double creepMagnitude;
@@ -24,21 +24,21 @@ public class RotateToHeading extends Command
 	private boolean isCreeping;
 	private double sign;
 
-	public RotateToHeading(String rotateMagnitudeKey, String brakeHeadingKey, String targetHeadingKey, String creepMagnitudeKey)
+	public RotateToHeading(String rotateMagnitudeKey, String brakeOffsetKey, String targetHeadingKey, String creepMagnitudeKey)
 	{
 		requires(Robot.driveTrain);
 
-		this.brakeHeadingKey = brakeHeadingKey;
+		this.brakeOffsetKey = brakeOffsetKey;
 		this.targetHeadingKey = targetHeadingKey;
 		this.rotateMagnitudeKey = rotateMagnitudeKey;
 		this.creepMagnitudeKey = creepMagnitudeKey;
 	}
 
-	public RotateToHeading(double rotateMagnitude, double brakeHeading, double targetHeading, double creepMagnitude)
+	public RotateToHeading(double rotateMagnitude, double brakeOffset, double targetHeading, double creepMagnitude)
 	{
 		requires(Robot.driveTrain);
 
-		this.brakeHeading = brakeHeading;
+		this.brakeOffset = Math.abs(brakeOffset);
 		this.targetHeading = targetHeading;
 		this.rotateMagnitude = rotateMagnitude;
 		this.creepMagnitude = creepMagnitude;
@@ -55,27 +55,20 @@ public class RotateToHeading extends Command
 	{
 		if (null != rotateMagnitudeKey)
 		{
-			brakeHeading = SmartDashboard.getNumber(brakeHeadingKey);
+			brakeOffset = Math.abs(SmartDashboard.getNumber(brakeOffsetKey));
 			targetHeading = SmartDashboard.getNumber(targetHeadingKey);
 			rotateMagnitude = Math.abs(SmartDashboard.getNumber(rotateMagnitudeKey));
 			creepMagnitude = Math.abs(SmartDashboard.getNumber(creepMagnitudeKey));
 		}
 		
 		Robot.gyroscope.reset();
-		
-		isCreeping = false;
-		
+				
 		// If our target is within braking range, do not start driving, 
 		// but creep to the target instead.
-		if (Math.abs(targetHeading) < Math.abs(brakeHeading))
-		{
-			isCreeping = true;
-		}
+		isCreeping = Math.abs(targetHeading) < brakeOffset;
 		
 		sign = targetHeading < 0 ? -1 : 1;
 		
-		rotateMagnitude = sign*rotateMagnitude;
-		creepMagnitude = sign*creepMagnitude;
 		previousHeading = 0;
 	}
 
@@ -89,18 +82,18 @@ public class RotateToHeading extends Command
 		// We then rotate creepily until we reach range.
 		currentHeading = Robot.gyroscope.getHeading();
 		
-		if (Math.abs(currentHeading) < (Math.abs(targetHeading) - Math.abs(brakeHeading)))
+		if (Math.abs(currentHeading) < (Math.abs(targetHeading) - brakeOffset))
 		{
-			Robot.driveTrain.driveCartesian(0, 0, rotateMagnitude, 0);
+			Robot.driveTrain.driveCartesian(0, 0, sign * rotateMagnitude, 0);
 		}
 		else if (!isCreeping && Math.abs(previousHeading) < Math.abs(currentHeading))
 		{
-			Robot.driveTrain.driveCartesian(0, 0, -rotateMagnitude, 0);
+			Robot.driveTrain.driveCartesian(0, 0, -sign * rotateMagnitude, 0);
 		}
 		else
 		{ 
 			isCreeping = true;
-			Robot.driveTrain.driveCartesian(0, 0, creepMagnitude, 0);
+			Robot.driveTrain.driveCartesian(0, 0, sign * creepMagnitude, 0);
 		}
 
 		previousHeading = currentHeading;
