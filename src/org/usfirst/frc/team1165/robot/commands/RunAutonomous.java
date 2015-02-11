@@ -29,6 +29,6 @@ public class RunAutonomous extends CommandGroup
 		addSequential(new DriveStraightDistance(-1, 65));
 		//addSequential(new DriveToObject(-0.4, 30, 19, -0.2, 15));
 		addSequential(new RotateToHeading(.6, 30, -75, 0.2));
-		addSequential(new DriveStraightDistanceWithTcas(-0.4, 150, 60));
+		addSequential(new DriveStraightDistanceWithTcas(-0.4, 125, 60, 30));
 	}
 }

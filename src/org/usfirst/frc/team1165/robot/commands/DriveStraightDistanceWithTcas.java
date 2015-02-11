@@ -13,6 +13,7 @@ public class DriveStraightDistanceWithTcas extends Command
 	private double straightMagnitude;
 	private double straightInches;
 	private double tcas;
+	private double sitAndSpin; //distance from the sonar at which all forward motion stops and we twist until sonar clears
 	private boolean didWeAvoidOneThing = false;
 	
 	public DriveStraightDistanceWithTcas(String straightMagnitudeKey, String straightInchesKey) 
@@ -22,12 +23,13 @@ public class DriveStraightDistanceWithTcas extends Command
 		this.straightInchesKey = straightInchesKey;
 	}
 
-	public DriveStraightDistanceWithTcas(double straightMagnitude, double straightInches, double tcas) 
+	public DriveStraightDistanceWithTcas(double straightMagnitude, double straightInches, double tcas, double sitAndSpin) 
 	{
 		requires(Robot.driveTrain);
 		this.straightMagnitude = straightMagnitude;
 		this.straightInches = straightInches;
 		this.tcas = tcas;
+		this.sitAndSpin = sitAndSpin;
 		straightMagnitudeKey = null;
 	}
 
@@ -38,7 +40,7 @@ public class DriveStraightDistanceWithTcas extends Command
 			straightMagnitude = SmartDashboard.getNumber(straightMagnitudeKey);
 			straightInches = SmartDashboard.getNumber(straightInchesKey);
 		}
-		
+		didWeAvoidOneThing = false;		
 		Robot.gyroscope.reset();
 		Robot.quadEncoder.reset();
 	}
@@ -46,17 +48,24 @@ public class DriveStraightDistanceWithTcas extends Command
 	protected void execute()
 	{
 		double twistCorrection = Robot.gyroscope.getTwistCorrection();
+		double speed;
 		if (Robot.rangeFinder.getRange() < tcas) 
 		{ 
-			twistCorrection = -0.3;
+			twistCorrection = -0.40;
 			if (!didWeAvoidOneThing)
 			{
 				didWeAvoidOneThing = true;
-				straightInches *= 1.2;
+				straightInches *= 1.1;
 			}
-		} 
+		}
+		if (Robot.rangeFinder.getRange() < sitAndSpin)
+		{
+			speed = 0;//-straightMagnitude *0.5;
+			twistCorrection = -0.3;
+		}
+		else speed = straightMagnitude;
 		
-		Robot.driveTrain.driveCartesian(straightMagnitude, 0, twistCorrection, 0);
+		Robot.driveTrain.driveCartesian(speed, 0, twistCorrection, 0);
 	}
  
 	protected boolean isFinished()
