@@ -15,59 +15,29 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class OI
 {
-	// // CREATING BUTTONS
-	// One type of button is a joystick button which is any button on a
-	// joystick.
-	// You create one by telling it which joystick it's on and which button
-	// number it is.
-	// Joystick stick = new Joystick(port);
-	// Button button = new JoystickButton(stick, buttonNumber);
-
-	// There are a few additional built in buttons you can use. Additionally,
-	// by subclassing Button you can create custom triggers and bind those to
-	// commands the same as any other Button.
-
-	// // TRIGGERING COMMANDS WITH BUTTONS
-	// Once you have a button, it's trivial to bind it to a button in one of
-	// three ways:
-
-	// Start the command when the button is pressed and let it run the command
-	// until it is finished as determined by it's isFinished method.
-	// button.whenPressed(new ExampleCommand());
-
-	// Run the command while the button is being held down and interrupt it once
-	// the button is released.
-	// button.whileHeld(new ExampleCommand());
-
-	// Start the command when the button is released and let it run the command
-	// until it is finished as determined by it's isFinished method.
-	// button.whenReleased(new ExampleCommand());
-
 	private final Joystick mainJoystick = new Joystick(RobotMap.joystickPort1);
 
 	public OI()
 	{
 		SmartDashboard.putNumber("Dampening", .9);
 	
+		SmartDashboard.putNumber("Forward Speed", -1);
+		SmartDashboard.putData(new DriveStraight("Forward Speed", 0.5));
+
+		SmartDashboard.putNumber("Drive Inches", 53);
+		SmartDashboard.putData(new DriveStraightDistance("Forward Speed", "Drive Inches"));
+
+		SmartDashboard.putNumber("Target Range", 19);
+		SmartDashboard.putNumber("Brake Range", 50);
+		SmartDashboard.putNumber("Creep Speed", -.2);
+		SmartDashboard.putData(new DriveToObject("Forward Speed", "Brake Range", "Target Range", "Creep Speed"));
+
 		SmartDashboard.putNumber("Target Heading", 45);
 		SmartDashboard.putNumber("Brake Heading", 10);
 		SmartDashboard.putNumber("Rotate Magnitude", .4);
 		SmartDashboard.putNumber("Creep Magnitude", .2);
 		SmartDashboard.putData(new RotateToHeading("Rotate Magnitude", "Brake Heading", "Target Heading",
 				"Creep Magnitude"));
-
-		SmartDashboard.putNumber("Straight Magnitude", .4); 
-		SmartDashboard.putData(new DriveStraight("Straight Magnitude", .5));
-
-		SmartDashboard.putNumber("Straight Inches", 53);
-		SmartDashboard.putData(new DriveStraightDistance("Straight Magnitude", "Straight Inches"));
-
-		SmartDashboard.putNumber("Target Range", 19);
-		SmartDashboard.putNumber("Brake Range", 50);
-		SmartDashboard.putNumber("Forward Speed", -1);
-		SmartDashboard.putNumber("Creep Speed", -.2);
-		SmartDashboard.putData(new DriveToObject("Forward Speed", "Brake Range", "Target Range", "Creep Speed"));
-
 	}
 
 	public double getDampening()

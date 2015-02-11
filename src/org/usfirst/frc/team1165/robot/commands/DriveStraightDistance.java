@@ -10,33 +10,33 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class DriveStraightDistance extends Command
 {
-	private String straightMagnitudeKey;
-	private String straightInchesKey;
+	private String forwardSpeedKey;
+	private String driveInchesKey;
 
-	private double straightMagnitude;
-	private double straightInches;
+	private double forwardSpeed;
+	private double driveInches;
 	
-	public DriveStraightDistance(String straightMagnitudeKey, String straightInchesKey) 
+	public DriveStraightDistance(String forwardSpeedKey, String driveInchesKey) 
 	{
 		requires(Robot.driveTrain);
-		this.straightMagnitudeKey = straightMagnitudeKey;
-		this.straightInchesKey = straightInchesKey;
+		this.forwardSpeedKey = forwardSpeedKey;
+		this.driveInchesKey = driveInchesKey;
 	}
 
-	public DriveStraightDistance(double straightMagnitude, double straightInches) 
+	public DriveStraightDistance(double forwardSpeed, double driveInches) 
 	{
 		requires(Robot.driveTrain);
-		this.straightMagnitude = straightMagnitude;
-		this.straightInches = straightInches;
-		straightMagnitudeKey = null;
+		this.forwardSpeed = forwardSpeed;
+		this.driveInches = driveInches;
+		forwardSpeedKey = null;
 	}
 
 	protected void initialize()
 	{
-		if (null != straightMagnitudeKey)
+		if (null != forwardSpeedKey)
 		{
-			straightMagnitude = SmartDashboard.getNumber(straightMagnitudeKey);
-			straightInches = SmartDashboard.getNumber(straightInchesKey);
+			forwardSpeed = SmartDashboard.getNumber(forwardSpeedKey);
+			driveInches = SmartDashboard.getNumber(driveInchesKey);
 		}
 		
 		Robot.gyroscope.reset();
@@ -47,12 +47,12 @@ public class DriveStraightDistance extends Command
 	{
 		double twistCorrection = Robot.gyroscope.getTwistCorrection();
 		
-		Robot.driveTrain.driveCartesian(straightMagnitude, 0, twistCorrection, 0);
+		Robot.driveTrain.driveCartesian(forwardSpeed, 0, twistCorrection, 0);
 	}
  
 	protected boolean isFinished()
 	{
-		return Math.abs(Robot.quadEncoder.getInches()) > straightInches;
+		return Math.abs(Robot.quadEncoder.getInches()) > driveInches;
 	}
 
 	protected void end()

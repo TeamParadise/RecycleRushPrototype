@@ -7,15 +7,15 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveToObject extends Command
 {
-	private String forwardMagnitudeKey;
+	private String forwardSpeedKey;
 	private String brakeRangeKey;
 	private String targetRangeKey;
-	private String creepMagnitudeKey;
+	private String creepSpeedKey;
 
-	private double forwardMagnitude;
+	private double forwardSpeed;
 	private double brakeRange;
 	private double targetRange;
-	private double creepMagnitude;
+	private double creepSpeed;
 	private double neverMore;
 
 	private double currentRange;
@@ -24,34 +24,34 @@ public class DriveToObject extends Command
 	
 	private boolean isCreeping;
 	
-	public DriveToObject(String forwardMagnitudeKey, String brakeRangeKey, String targetRangeKey, String creepMagnitudeKey)
+	public DriveToObject(String forwardSpeedKey, String brakeRangeKey, String targetRangeKey, String creepSpeedKey)
 	{
 		requires(Robot.driveTrain);
-		this.forwardMagnitudeKey = forwardMagnitudeKey;
+		this.forwardSpeedKey = forwardSpeedKey;
 		this.brakeRangeKey = brakeRangeKey;
 		this.targetRangeKey = targetRangeKey;
-		this.creepMagnitudeKey = creepMagnitudeKey;
+		this.creepSpeedKey = creepSpeedKey;
 	}
 
-	public DriveToObject(double forwardMagnitude, double brakeRange, double targetRange, double creepMagnitude, double neverMore)
+	public DriveToObject(double forwardSpeed, double brakeRange, double targetRange, double creepSpeed, double neverMore)
 	{
 		requires(Robot.driveTrain);
-		this.forwardMagnitude = forwardMagnitude;
+		this.forwardSpeed = forwardSpeed;
 		this.brakeRange = brakeRange;
 		this.targetRange = targetRange;
-		this.creepMagnitude = creepMagnitude;
+		this.creepSpeed = creepSpeed;
 		this.neverMore = neverMore;
-		forwardMagnitudeKey = null;
+		forwardSpeedKey = null;
 	}
 
 	protected void initialize()
 	{
-		if (null != forwardMagnitudeKey)
+		if (null != forwardSpeedKey)
 		{
-			forwardMagnitude = SmartDashboard.getNumber(forwardMagnitudeKey);
+			forwardSpeed = SmartDashboard.getNumber(forwardSpeedKey);
 			brakeRange = SmartDashboard.getNumber(brakeRangeKey);
 			targetRange = SmartDashboard.getNumber(targetRangeKey);
-			creepMagnitude = SmartDashboard.getNumber(creepMagnitudeKey);
+			creepSpeed = SmartDashboard.getNumber(creepSpeedKey);
 		}
 		Robot.quadEncoder.reset();
 		Robot.gyroscope.reset();
@@ -71,16 +71,16 @@ public class DriveToObject extends Command
 		
 		if (currentRange > brakeRange)
 		{
-			Robot.driveTrain.driveCartesian(forwardMagnitude, 0, twistCorrection, 0);
+			Robot.driveTrain.driveCartesian(forwardSpeed, 0, twistCorrection, 0);
 		}
 		else if (!isCreeping && previousRange > currentRange)
 		{
-			Robot.driveTrain.driveCartesian(-forwardMagnitude, 0, twistCorrection, 0);
+			Robot.driveTrain.driveCartesian(-forwardSpeed, 0, twistCorrection, 0);
 		}
 		else
 		{ 
 			isCreeping = true;
-			Robot.driveTrain.driveCartesian(creepMagnitude, 0, twistCorrection, 0);
+			Robot.driveTrain.driveCartesian(creepSpeed, 0, twistCorrection, 0);
 		}
 
 		previousRange = currentRange;

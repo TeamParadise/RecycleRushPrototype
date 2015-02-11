@@ -10,22 +10,22 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class DriveStraight extends Command
 {
-	private String straightMagnitudeKey;
+	private String forwardSpeedKey;
 
-	private double straightMagnitude;
+	private double forwardSpeed;
 	
-	public DriveStraight(String straightMagnitudeKey, double timeout) 
+	public DriveStraight(String forwardSpeedKey, double timeout) 
 	{
 		super(timeout);
 		requires(Robot.driveTrain);
-		this.straightMagnitudeKey = straightMagnitudeKey;
+		this.forwardSpeedKey = forwardSpeedKey;
 	}
 
 	protected void initialize()
 	{
-		if (null != straightMagnitudeKey)
+		if (null != forwardSpeedKey)
 		{
-			straightMagnitude = SmartDashboard.getNumber(straightMagnitudeKey);
+			forwardSpeed = SmartDashboard.getNumber(forwardSpeedKey);
 		}
 		
 		Robot.gyroscope.reset();
@@ -35,7 +35,7 @@ public class DriveStraight extends Command
 	{
 		double twistCorrection = Robot.gyroscope.getTwistCorrection();
 		
-		Robot.driveTrain.driveCartesian(straightMagnitude, 0, twistCorrection, 0);
+		Robot.driveTrain.driveCartesian(forwardSpeed, 0, twistCorrection, 0);
 	}
 
 	protected boolean isFinished()

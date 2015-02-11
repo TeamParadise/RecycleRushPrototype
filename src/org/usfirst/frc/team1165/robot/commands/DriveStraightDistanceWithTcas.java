@@ -7,38 +7,38 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveStraightDistanceWithTcas extends Command
 {
-	private String straightMagnitudeKey;
-	private String straightInchesKey;
+	private String forwardSpeedKey;
+	private String driveInchesKey;
 
-	private double straightMagnitude;
-	private double straightInches;
+	private double forwardSpeed;
+	private double driveInches;
 	private double tcas;
 	private double sitAndSpin; //distance from the sonar at which all forward motion stops and we twist until sonar clears
 	private boolean didWeAvoidOneThing = false;
 	
-	public DriveStraightDistanceWithTcas(String straightMagnitudeKey, String straightInchesKey) 
+	public DriveStraightDistanceWithTcas(String forwardSpeedKey, String driveInchesKey) 
 	{
 		requires(Robot.driveTrain);
-		this.straightMagnitudeKey = straightMagnitudeKey;
-		this.straightInchesKey = straightInchesKey;
+		this.forwardSpeedKey = forwardSpeedKey;
+		this.driveInchesKey = driveInchesKey;
 	}
 
-	public DriveStraightDistanceWithTcas(double straightMagnitude, double straightInches, double tcas, double sitAndSpin) 
+	public DriveStraightDistanceWithTcas(double forwardSpeed, double driveInches, double tcas, double sitAndSpin) 
 	{
 		requires(Robot.driveTrain);
-		this.straightMagnitude = straightMagnitude;
-		this.straightInches = straightInches;
+		this.forwardSpeed = forwardSpeed;
+		this.driveInches = driveInches;
 		this.tcas = tcas;
 		this.sitAndSpin = sitAndSpin;
-		straightMagnitudeKey = null;
+		forwardSpeedKey = null;
 	}
 
 	protected void initialize()
 	{
-		if (null != straightMagnitudeKey)
+		if (null != forwardSpeedKey)
 		{
-			straightMagnitude = SmartDashboard.getNumber(straightMagnitudeKey);
-			straightInches = SmartDashboard.getNumber(straightInchesKey);
+			forwardSpeed = SmartDashboard.getNumber(forwardSpeedKey);
+			driveInches = SmartDashboard.getNumber(driveInchesKey);
 		}
 		didWeAvoidOneThing = false;		
 		Robot.gyroscope.reset();
@@ -55,22 +55,22 @@ public class DriveStraightDistanceWithTcas extends Command
 			if (!didWeAvoidOneThing)
 			{
 				didWeAvoidOneThing = true;
-				straightInches *= 1.1;
+				driveInches *= 1.1;
 			}
 		}
 		if (Robot.rangeFinder.getRange() < sitAndSpin)
 		{
-			speed = 0;//-straightMagnitude *0.5;
+			speed = 0;//-forwardSpeed *0.5;
 			twistCorrection = -0.3;
 		}
-		else speed = straightMagnitude;
+		else speed = forwardSpeed;
 		
 		Robot.driveTrain.driveCartesian(speed, 0, twistCorrection, 0);
 	}
  
 	protected boolean isFinished()
 	{
-		return Math.abs(Robot.quadEncoder.getInches()) > straightInches;
+		return Math.abs(Robot.quadEncoder.getInches()) > driveInches;
 	}
 
 	protected void end()

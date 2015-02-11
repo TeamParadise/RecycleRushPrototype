@@ -9,13 +9,6 @@ public class RunAutonomous extends CommandGroup
 
 	public RunAutonomous()
 	{
-		// Add elements to smart dashboard for driving forward:
-//		SmartDashboard.putNumber("Forward Speed", -1);
-//		SmartDashboard.putNumber("Brake Range", 50.0);
-//		SmartDashboard.putNumber("Target Range", 19.0);
-//		SmartDashboard.putNumber("Rotate Speed", 1);
-//		SmartDashboard.putNumber("Creep Speed", -0.1);
-
 		//addSequential(new PickUpTote());
 		addSequential(new DriveToObject(-0.7, 40, 19, -0.2, 50)); 
 		//addSequential(new PickUpContainer());
