@@ -25,6 +25,7 @@ public class Robot extends IterativeRobot
 	public static final Gyroscope gyroscope = new Gyroscope();
 	public static final QuadEncoder quadEncoder = new QuadEncoder();
 	public static OI oi;
+	//public static CameraServer camera = new CameraServer();
 
 	Command autonomousCommand;
 
@@ -35,6 +36,10 @@ public class Robot extends IterativeRobot
 	public void robotInit()
 	{
 		oi = new OI();
+		//CameraServer camera = new CameraServer();
+		//CameraServer.getInstance();
+		//camera.setQuality(50);
+		//camera.startAutomaticCapture("cam0");
 
 		// instantiate the command used for the autonomous period
 		autonomousCommand = new RunAutonomous();
