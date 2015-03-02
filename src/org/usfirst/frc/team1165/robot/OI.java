@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class OI
 {
 	private final Joystick mainJoystick = new Joystick(RobotMap.joystickPort1);
+	private final Joystick secondaryJoystick = new Joystick(RobotMap.joystickPort2);
 
 	public OI()
 	{
@@ -58,5 +59,17 @@ public class OI
 	public double getDriveTwist()
 	{
 		return mainJoystick.getTwist();
+	}
+	
+	public double canPickupSpeedX()
+	{
+		return secondaryJoystick.getX();
+	}
+
+	public double canPickupSpeedY()
+	{
+		// Pushing forward on the joystick returns negative y values.
+		// We want the reverse of that.
+		return -secondaryJoystick.getY();
 	}
 }

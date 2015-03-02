@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 import org.usfirst.frc.team1165.robot.commands.RunAutonomous;
+import org.usfirst.frc.team1165.robot.subsystems.CanPickupArms;
 import org.usfirst.frc.team1165.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team1165.robot.subsystems.QuadEncoder;
 import org.usfirst.frc.team1165.robot.subsystems.Gyroscope;
@@ -20,6 +21,7 @@ import org.usfirst.frc.team1165.robot.subsystems.RangeFinder;
  */
 public class Robot extends IterativeRobot
 {
+	public static final CanPickupArms canPickupArms = new CanPickupArms();
 	public static final DriveTrain driveTrain = new DriveTrain();
 	public static final RangeFinder rangeFinder = new RangeFinder();
 	public static final Gyroscope gyroscope = new Gyroscope();

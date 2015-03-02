@@ -30,6 +30,9 @@ public class RobotMap
     
     // Gyroscope
     public static final int gyroscopeChannel		= 0;
+    
+    public static final int leftCanPickupArm = 6;
+	public static final int rightCanPickupArm = 7;
 
     //Joystick Ports
     public static final int joystickPort1          = 1;
