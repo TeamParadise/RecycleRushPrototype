@@ -48,7 +48,7 @@ public class OI
 
 	public double getDriveX()
 	{
-		return mainJoystick.getY();
+		return -mainJoystick.getY();
 	}
 
 	public double getDriveY()
