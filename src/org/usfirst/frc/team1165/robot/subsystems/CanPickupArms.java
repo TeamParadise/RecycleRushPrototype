@@ -14,7 +14,7 @@ public class CanPickupArms extends Subsystem
 	/**
 	 * Accepts a value in the form of a double or float from -1 to 1 and takes
 	 * the absolute value of it and inverts it for the left pickup motor so that
-	 * a box will be ejected
+	 * the arms will be moved down.
 	 * 
 	 * @param speed
 	 */
@@ -28,7 +28,7 @@ public class CanPickupArms extends Subsystem
 	/**
 	 * Accepts a value in the form of a double or float from -1 to 1 and takes
 	 * the absolute value of it and inverts it for the right pickup motor so
-	 * that a box will be grabbed
+	 * that the arms will be moved up.
 	 * 
 	 * @param speed
 	 */
