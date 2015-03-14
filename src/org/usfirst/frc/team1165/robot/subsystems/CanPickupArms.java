@@ -22,7 +22,7 @@ public class CanPickupArms extends Subsystem
 	{
 		speed = Math.min(Math.abs(speed), 1);
 		leftPickupArm.set(-speed);
-		rightPickupArm.set(speed*0.75);
+		rightPickupArm.set(speed);
 	}
 
 	/**
@@ -35,8 +35,8 @@ public class CanPickupArms extends Subsystem
 	public void moveDown(double speed)
 	{
 		speed = Math.min(Math.abs(speed), 1);
-		leftPickupArm.set(speed);
-		rightPickupArm.set(-speed*0.75);
+		leftPickupArm.set(speed * 0.5);
+		rightPickupArm.set(-speed * 0.5);
 	}
 
 	/**
