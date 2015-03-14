@@ -7,6 +7,8 @@ import org.usfirst.frc.team1165.robot.commands.ReportEncoder;
 import org.usfirst.frc.team1165.robot.commands.RotateToHeading;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -17,6 +19,8 @@ public class OI
 {
 	private final Joystick mainJoystick = new Joystick(RobotMap.joystickPort1);
 	private final Joystick secondaryJoystick = new Joystick(RobotMap.joystickPort2);
+    
+	private final Button secondaryButton2 = new JoystickButton(secondaryJoystick, 2);
 
 	public OI()
 	{
@@ -63,13 +67,17 @@ public class OI
 	
 	public double canPickupSpeedX()
 	{
-		return secondaryJoystick.getX();
+		return secondaryButton2.get()
+				?secondaryJoystick.getX()
+				:0;
 	}
 
 	public double canPickupSpeedY()
 	{
 		// Pushing forward on the joystick returns negative y values.
 		// We want the reverse of that.
-		return -secondaryJoystick.getY();
+		return secondaryButton2.get()
+				?-secondaryJoystick.getY()
+				:0;
 	}
 }
