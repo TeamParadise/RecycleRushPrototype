@@ -68,8 +68,8 @@ public class OI
 	public double canPickupSpeedX()
 	{
 		return secondaryButton2.get()
-				?secondaryJoystick.getX()
-				:0;
+			? secondaryJoystick.getX()
+			: 0;
 	}
 
 	public double canPickupSpeedY()
@@ -77,7 +77,7 @@ public class OI
 		// Pushing forward on the joystick returns negative y values.
 		// We want the reverse of that.
 		return secondaryButton2.get()
-				?-secondaryJoystick.getY()
-				:0;
+			? -secondaryJoystick.getY()
+			: 0;
 	}
 }

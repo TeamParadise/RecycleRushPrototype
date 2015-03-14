@@ -34,11 +34,11 @@ public class RunCanPickupArmsFromJoystick extends Command
 		{
 			if (pickupSpeedY > 0)
 			{
-				Robot.canPickupArms.moveUp(magnitudeY);
+				Robot.canPickupArms.moveDown(magnitudeY);
 			}
 			else
 			{
-				Robot.canPickupArms.moveDown(magnitudeY);
+				Robot.canPickupArms.moveUp(magnitudeY);
 			}
 		}
 		else
