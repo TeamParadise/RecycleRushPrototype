@@ -8,8 +8,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class CanPickupArms extends Subsystem
 {
-	Victor leftPickupWheel = new Victor(RobotMap.leftCanPickupArm);
-	Victor rightPickupWheel = new Victor(RobotMap.rightCanPickupArm);
+	Victor leftPickupArm = new Victor(RobotMap.leftCanPickupArm);
+	Victor rightPickupArm = new Victor(RobotMap.rightCanPickupArm);
 
 	/**
 	 * Accepts a value in the form of a double or float from -1 to 1 and takes
@@ -21,8 +21,8 @@ public class CanPickupArms extends Subsystem
 	public void moveDown(double speed)
 	{
 		speed = Math.min(Math.abs(speed), 1);
-		leftPickupWheel.set(-speed);
-		rightPickupWheel.set(speed*0.75);
+		leftPickupArm.set(-speed);
+		rightPickupArm.set(speed*0.75);
 	}
 
 	/**
@@ -35,8 +35,8 @@ public class CanPickupArms extends Subsystem
 	public void moveUp(double speed)
 	{
 		speed = Math.min(Math.abs(speed), 1);
-		leftPickupWheel.set(speed);
-		rightPickupWheel.set(-speed*0.75);
+		leftPickupArm.set(speed);
+		rightPickupArm.set(-speed*0.75);
 	}
 
 	/**
@@ -44,8 +44,8 @@ public class CanPickupArms extends Subsystem
 	 */
 	public void idle()
 	{
-		leftPickupWheel.set(0);
-		rightPickupWheel.set(0);
+		leftPickupArm.set(0);
+		rightPickupArm.set(0);
 	}
 
 	public void initDefaultCommand()
