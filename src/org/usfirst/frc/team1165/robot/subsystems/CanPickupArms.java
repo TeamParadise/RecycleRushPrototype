@@ -18,7 +18,7 @@ public class CanPickupArms extends Subsystem
 	 * 
 	 * @param speed
 	 */
-	public void spinOut(double speed)
+	public void moveDown(double speed)
 	{
 		speed = Math.min(Math.abs(speed), 1);
 		leftPickupWheel.set(-speed);
@@ -32,37 +32,10 @@ public class CanPickupArms extends Subsystem
 	 * 
 	 * @param speed
 	 */
-	public void spinIn(double speed)
+	public void moveUp(double speed)
 	{
 		speed = Math.min(Math.abs(speed), 1);
 		leftPickupWheel.set(speed);
-		rightPickupWheel.set(-speed*0.75);
-	}
-
-	/**
-	 * Accepts a value in the form of a double or float from -1 to 1 and takes
-	 * the absolute value of it to spin both of the pickup motors to the right
-	 * 
-	 * @param speed
-	 */
-	public void spinRight(double speed)
-	{
-		speed = Math.min(Math.abs(speed), 1);
-		leftPickupWheel.set(speed);
-		rightPickupWheel.set(speed*0.75);
-	}
-
-	/**
-	 * Accepts a value in the form of a double or float from -1 to 1 and takes
-	 * the absolute value of it and inverts it to spin both of the pickup motors
-	 * to the left
-	 * 
-	 * @param speed
-	 */
-	public void spinLeft(double speed)
-	{
-		speed = Math.min(Math.abs(speed), 1);
-		leftPickupWheel.set(-speed);
 		rightPickupWheel.set(-speed*0.75);
 	}
 
