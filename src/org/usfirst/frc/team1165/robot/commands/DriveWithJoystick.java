@@ -23,8 +23,8 @@ public class DriveWithJoystick extends Command
         double dampingFactor = Robot.oi.getDampening();       // Between 0 and 1; 0 = No damping 
 
         double calX     = Robot.oi.getDriveX();
-        double calY     = Robot.oi.getDriveY(); 
-        double calTwist = Robot.oi.getDriveTwist(); 
+        double calY     = -Robot.oi.getDriveY(); 
+        double calTwist = -Robot.oi.getDriveTwist(); 
 
         calX     = dampingFactor*calX*calX*calX             + (1-dampingFactor)*calX; 
         calY     = dampingFactor*calY*calY*calY             + (1-dampingFactor)*calY; 
