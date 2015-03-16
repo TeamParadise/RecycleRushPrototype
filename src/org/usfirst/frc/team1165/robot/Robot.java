@@ -4,8 +4,13 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.usfirst.frc.team1165.robot.commands.RunAutonomous;
+import org.usfirst.frc.team1165.robot.commands.MoveContainerOutOfWay;
+import org.usfirst.frc.team1165.robot.commands.MoveRobotToAutoZoneWithSetTote;
+import org.usfirst.frc.team1165.robot.commands.MoveRobotAndContainerToAutoZone;
+import org.usfirst.frc.team1165.robot.commands.RotateToPushContainerOutOfWay;
 import org.usfirst.frc.team1165.robot.subsystems.CanPickupArms;
 import org.usfirst.frc.team1165.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team1165.robot.subsystems.QuadEncoder;
@@ -28,7 +33,7 @@ public class Robot extends IterativeRobot
 	public static final QuadEncoder quadEncoder = new QuadEncoder();
 	public static OI oi;
 	//public static CameraServer camera = new CameraServer();
-
+	SendableChooser autoChooser; 
 	Command autonomousCommand;
 
 	/**
@@ -38,13 +43,19 @@ public class Robot extends IterativeRobot
 	public void robotInit()
 	{
 		oi = new OI();
+		autoChooser = new SendableChooser();
+		autoChooser.addObject("MoveRobotAndContainerToAutoZone", new MoveRobotAndContainerToAutoZone());
+		autoChooser.addObject("MoveRobotToAutoZoneWithSetTote", new MoveRobotToAutoZoneWithSetTote());
+		autoChooser.addDefault("MoveContainerOutOfWay", new MoveContainerOutOfWay());
+		autoChooser.addObject("RotateToPushContainerOutOfWay", new RotateToPushContainerOutOfWay());
+		SmartDashboard.putData("Auto:", autoChooser);
 		//CameraServer camera = new CameraServer();
 		//CameraServer.getInstance();
 		//camera.setQuality(50);
 		//camera.startAutomaticCapture("cam0");
 
 		// instantiate the command used for the autonomous period
-		autonomousCommand = new RunAutonomous();
+		//autonomousCommand = new MoveRobotToAutoZoneWithSetTote();
 	}
 
 	public void disabledPeriodic()
@@ -55,10 +66,8 @@ public class Robot extends IterativeRobot
 	public void autonomousInit()
 	{
 		// schedule the autonomous command (example)
-		if (autonomousCommand != null)
-		{
-			autonomousCommand.start();
-		}
+		autonomousCommand = (Command) autoChooser.getSelected();
+		autonomousCommand.start();
 	}
 
 	/**

@@ -4,6 +4,7 @@ import org.usfirst.frc.team1165.robot.commands.DriveStraight;
 import org.usfirst.frc.team1165.robot.commands.DriveStraightDistance;
 import org.usfirst.frc.team1165.robot.commands.DriveToObject;
 import org.usfirst.frc.team1165.robot.commands.ReportEncoder;
+import org.usfirst.frc.team1165.robot.commands.ResetEncoder;
 import org.usfirst.frc.team1165.robot.commands.RotateToHeading;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -43,6 +44,7 @@ public class OI
 		SmartDashboard.putNumber("Creep Magnitude", .2);
 		SmartDashboard.putData(new RotateToHeading("Rotate Magnitude", "Brake Heading", "Target Heading",
 				"Creep Magnitude"));
+		SmartDashboard.putData("Reset Encoder", new ResetEncoder());
 	}
 
 	public double getDampening()
