@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team1165.robot.commands.MoveContainerOutOfWay;
 import org.usfirst.frc.team1165.robot.commands.MoveRobotToAutoZoneWithSetTote;
 import org.usfirst.frc.team1165.robot.commands.MoveRobotAndContainerToAutoZone;
+import org.usfirst.frc.team1165.robot.commands.RotateAndStrafeToPushContainerOutOfWay;
 import org.usfirst.frc.team1165.robot.commands.RotateToPushContainerOutOfWay;
 import org.usfirst.frc.team1165.robot.subsystems.CanPickupArms;
 import org.usfirst.frc.team1165.robot.subsystems.DriveTrain;
@@ -48,6 +49,7 @@ public class Robot extends IterativeRobot
 		autoChooser.addObject("MoveRobotToAutoZoneWithSetTote", new MoveRobotToAutoZoneWithSetTote());
 		autoChooser.addDefault("MoveContainerOutOfWay", new MoveContainerOutOfWay());
 		autoChooser.addObject("RotateToPushContainerOutOfWay", new RotateToPushContainerOutOfWay());
+		autoChooser.addObject("RotateAndStrafeToPushContainerOutOfWay", new RotateAndStrafeToPushContainerOutOfWay());
 		SmartDashboard.putData("Auto:", autoChooser);
 		//CameraServer camera = new CameraServer();
 		//CameraServer.getInstance();

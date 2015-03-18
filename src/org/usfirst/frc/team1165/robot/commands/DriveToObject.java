@@ -27,6 +27,8 @@ public class DriveToObject extends Command
 	public DriveToObject(String forwardSpeedKey, String brakeRangeKey, String targetRangeKey, String creepSpeedKey)
 	{
 		requires(Robot.driveTrain);
+		requires(Robot.gyroscope);
+		requires(Robot.quadEncoder);
 		this.forwardSpeedKey = forwardSpeedKey;
 		this.brakeRangeKey = brakeRangeKey;
 		this.targetRangeKey = targetRangeKey;
@@ -36,6 +38,8 @@ public class DriveToObject extends Command
 	public DriveToObject(double forwardSpeed, double brakeRange, double targetRange, double creepSpeed, double neverMore)
 	{
 		requires(Robot.driveTrain);
+		requires(Robot.gyroscope);
+		requires(Robot.quadEncoder);
 		this.forwardSpeed = forwardSpeed;
 		this.brakeRange = brakeRange;
 		this.targetRange = targetRange;

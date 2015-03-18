@@ -23,10 +23,12 @@ public class RotateToHeading extends Command
 	private double previousHeading; 
 	private boolean isCreeping;
 	private double sign;
+	private boolean resetWhenFinished = false;
 
 	public RotateToHeading(String rotateMagnitudeKey, String brakeOffsetKey, String targetHeadingKey, String creepMagnitudeKey)
 	{
 		requires(Robot.driveTrain);
+		requires(Robot.gyroscope);
 
 		this.brakeOffsetKey = brakeOffsetKey;
 		this.targetHeadingKey = targetHeadingKey;
@@ -37,11 +39,25 @@ public class RotateToHeading extends Command
 	public RotateToHeading(double rotateMagnitude, double brakeOffset, double targetHeading, double creepMagnitude)
 	{
 		requires(Robot.driveTrain);
+		requires(Robot.gyroscope);
 
 		this.brakeOffset = Math.abs(brakeOffset);
 		this.targetHeading = targetHeading;
 		this.rotateMagnitude = rotateMagnitude;
 		this.creepMagnitude = creepMagnitude;
+		rotateMagnitudeKey = null;
+	}
+
+	public RotateToHeading(double rotateMagnitude, double brakeOffset, double targetHeading, double creepMagnitude, boolean resetWhenFinished)
+	{
+		requires(Robot.driveTrain);
+		requires(Robot.gyroscope);
+
+		this.brakeOffset = Math.abs(brakeOffset);
+		this.targetHeading = targetHeading;
+		this.rotateMagnitude = rotateMagnitude;
+		this.creepMagnitude = creepMagnitude;
+		this.resetWhenFinished = resetWhenFinished;
 		rotateMagnitudeKey = null;
 	}
 
@@ -102,7 +118,9 @@ public class RotateToHeading extends Command
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished()
 	{
-		return Math.abs(Robot.gyroscope.getHeading()) >= Math.abs(targetHeading);
+		boolean finished = Math.abs(Robot.gyroscope.getHeading()) >= Math.abs(targetHeading);
+		if (finished && resetWhenFinished) Robot.gyroscope.reset();
+		return finished;
 	}
 
 	// Called once after isFinished returns true

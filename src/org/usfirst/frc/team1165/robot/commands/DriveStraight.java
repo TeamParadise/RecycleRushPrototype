@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class DriveStraight extends Command
 {
 	private String forwardSpeedKey;
-
 	private double forwardSpeed;
 	
 	public DriveStraight(String forwardSpeedKey, double timeout) 

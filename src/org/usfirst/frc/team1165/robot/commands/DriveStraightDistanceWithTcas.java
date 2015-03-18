@@ -19,6 +19,8 @@ public class DriveStraightDistanceWithTcas extends Command
 	public DriveStraightDistanceWithTcas(String forwardSpeedKey, String driveInchesKey) 
 	{
 		requires(Robot.driveTrain);
+		requires(Robot.gyroscope);
+		requires(Robot.quadEncoder);
 		this.forwardSpeedKey = forwardSpeedKey;
 		this.driveInchesKey = driveInchesKey;
 	}
@@ -26,6 +28,8 @@ public class DriveStraightDistanceWithTcas extends Command
 	public DriveStraightDistanceWithTcas(double forwardSpeed, double driveInches, double tcas, double sitAndSpin) 
 	{
 		requires(Robot.driveTrain);
+		requires(Robot.gyroscope);
+		requires(Robot.quadEncoder);
 		this.forwardSpeed = forwardSpeed;
 		this.driveInches = driveInches;
 		this.tcas = tcas;

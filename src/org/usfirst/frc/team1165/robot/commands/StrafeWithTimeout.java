@@ -13,6 +13,8 @@ public class StrafeWithTimeout extends Command
 
 	private double timeout;
 	private double speed;
+	private boolean resetWhenFinished = false;
+
 	
 	public StrafeWithTimeout(double speed,double timeout)
 	{
@@ -20,6 +22,15 @@ public class StrafeWithTimeout extends Command
 		requires(Robot.driveTrain);
 		this.timeout = timeout;
 		this.speed = speed;
+	}
+
+	public StrafeWithTimeout(double speed,double timeout, boolean resetWhenFinished)
+	{
+		super(timeout);
+		requires(Robot.driveTrain);
+		this.timeout = timeout;
+		this.speed = speed;
+		this.resetWhenFinished = resetWhenFinished;
 	}
 
 	// Called just before this Command runs the first time
@@ -33,10 +44,18 @@ public class StrafeWithTimeout extends Command
 		Robot.driveTrain.driveCartesian(0,-speed,0,0);
 	}
 
+	private void ResetSensors()
+	{
+		Robot.gyroscope.reset();
+		Robot.quadEncoder.reset();
+	}
+
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished()
 	{
-		return isTimedOut();
+		boolean finished = isTimedOut();
+		if (finished && resetWhenFinished) ResetSensors();
+		return finished;
 	}
 
 	// Called once after isFinished returns true

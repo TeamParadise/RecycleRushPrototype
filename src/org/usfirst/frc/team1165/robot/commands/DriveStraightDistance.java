@@ -15,10 +15,13 @@ public class DriveStraightDistance extends Command
 
 	private double forwardSpeed;
 	private double driveInches;
+	private boolean resetWhenFinished = false;
 	
 	public DriveStraightDistance(String forwardSpeedKey, String driveInchesKey) 
 	{
 		requires(Robot.driveTrain);
+		requires(Robot.gyroscope);
+		requires(Robot.quadEncoder);
 		this.forwardSpeedKey = forwardSpeedKey;
 		this.driveInchesKey = driveInchesKey;
 	}
@@ -26,8 +29,21 @@ public class DriveStraightDistance extends Command
 	public DriveStraightDistance(double forwardSpeed, double driveInches) 
 	{
 		requires(Robot.driveTrain);
+		requires(Robot.gyroscope);
+		requires(Robot.quadEncoder);
 		this.forwardSpeed = forwardSpeed;
 		this.driveInches = driveInches;
+		forwardSpeedKey = null;
+	}
+
+	public DriveStraightDistance(double forwardSpeed, double driveInches, boolean resetWhenFinished) 
+	{
+		requires(Robot.driveTrain);
+		requires(Robot.gyroscope);
+		requires(Robot.quadEncoder);
+		this.forwardSpeed = forwardSpeed;
+		this.driveInches = driveInches;
+		this.resetWhenFinished = resetWhenFinished;
 		forwardSpeedKey = null;
 	}
 
@@ -38,7 +54,11 @@ public class DriveStraightDistance extends Command
 			forwardSpeed = SmartDashboard.getNumber(forwardSpeedKey);
 			driveInches = SmartDashboard.getNumber(driveInchesKey);
 		}
-		
+		ResetSensors();
+	}
+	
+	private void ResetSensors()
+	{
 		Robot.gyroscope.reset();
 		Robot.quadEncoder.reset();
 	}
@@ -52,7 +72,9 @@ public class DriveStraightDistance extends Command
  
 	protected boolean isFinished()
 	{
-		return Math.abs(Robot.quadEncoder.getInches()) > Math.abs(driveInches);
+		boolean finished = Math.abs(Robot.quadEncoder.getInches()) > Math.abs(driveInches);
+		if (finished && resetWhenFinished) ResetSensors();
+		return finished;
 	}
 
 	protected void end()
