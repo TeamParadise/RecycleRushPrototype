@@ -2,38 +2,34 @@ package org.usfirst.frc.team1165.robot.commands;
 
 import org.usfirst.frc.team1165.robot.Robot;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class DriveStraightDistanceWithTcas extends Command
+/**
+ *
+ */
+public class DriveStraightDistanceNoEncoderReset extends Command
 {
 	private String forwardSpeedKey;
 	private String driveInchesKey;
 
 	private double forwardSpeed;
 	private double driveInches;
-	private double tcas;
-	private double sitAndSpin; //distance from the sonar at which all forward motion stops and we twist until sonar clears
-	private boolean didWeAvoidOneThing = false;
+	private boolean finishedWhenGreater = true;
 	
-	public DriveStraightDistanceWithTcas(String forwardSpeedKey, String driveInchesKey) 
+	public DriveStraightDistanceNoEncoderReset(String forwardSpeedKey, String driveInchesKey) 
 	{
 		requires(Robot.driveTrain);
-		requires(Robot.gyroscope);
-		requires(Robot.quadEncoder);
 		this.forwardSpeedKey = forwardSpeedKey;
 		this.driveInchesKey = driveInchesKey;
 	}
 
-	public DriveStraightDistanceWithTcas(double forwardSpeed, double driveInches, double tcas, double sitAndSpin) 
+	public DriveStraightDistanceNoEncoderReset(double forwardSpeed, double driveInches) 
 	{
 		requires(Robot.driveTrain);
-		requires(Robot.gyroscope);
-		requires(Robot.quadEncoder);
 		this.forwardSpeed = forwardSpeed;
 		this.driveInches = driveInches;
-		this.tcas = tcas;
-		this.sitAndSpin = sitAndSpin;
 		forwardSpeedKey = null;
 	}
 
@@ -44,44 +40,34 @@ public class DriveStraightDistanceWithTcas extends Command
 			forwardSpeed = SmartDashboard.getNumber(forwardSpeedKey);
 			driveInches = SmartDashboard.getNumber(driveInchesKey);
 		}
-		didWeAvoidOneThing = false;		
 		ResetSensors();
 		driveInches += Robot.quadEncoder.getInches();
+		finishedWhenGreater = driveInches > Robot.quadEncoder.getInches();
 	}
-
+	
 	private void ResetSensors()
 	{
 		Robot.gyroscope.reset();
 		//Robot.quadEncoder.reset();
 	}
 
-
 	protected void execute()
 	{
+		//double currentRange = Robot.rangeFinder.getRange();
 		double twistCorrection = Robot.gyroscope.getTwistCorrection();
-		double speed;
-		if (Robot.rangeFinder.getRange() < tcas) 
-		{ 
-			twistCorrection = -0.40;
-			if (!didWeAvoidOneThing)
-			{
-				didWeAvoidOneThing = true;
-				driveInches *= 1.1;
-			}
-		}
-		if (Robot.rangeFinder.getRange() < sitAndSpin)
-		{
-			speed = 0;//-forwardSpeed *0.5;
-			twistCorrection = -0.3;
-		}
-		else speed = forwardSpeed;
 		
-		Robot.driveTrain.driveCartesian(speed, 0, twistCorrection, 0);
+		Robot.driveTrain.driveCartesian(forwardSpeed, 0, twistCorrection, 0);
 	}
  
 	protected boolean isFinished()
 	{
-		return Math.abs(Robot.quadEncoder.getInches()) > driveInches;
+		//SmartDashboard.putNumber("Encoder Inches",Robot.quadEncoder.getInches());
+		//SmartDashboard.putNumber("End Inches",driveInches);
+		//return Math.abs(Robot.quadEncoder.getInches()) > Math.abs(driveInches);
+		if (finishedWhenGreater)
+			return Robot.quadEncoder.getInches() > driveInches;
+		else	
+			return Robot.quadEncoder.getInches() < driveInches;
 	}
 
 	protected void end()

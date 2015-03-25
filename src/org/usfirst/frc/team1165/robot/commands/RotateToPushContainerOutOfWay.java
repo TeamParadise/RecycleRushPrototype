@@ -18,7 +18,7 @@ public class RotateToPushContainerOutOfWay extends CommandGroup
 		addSequential(new DriveStraightDistance(RobotMap.DRIVE_SPEED,15));
 		//by turning and driving
 		addSequential(new RotateToHeading(RobotMap.ROTATE_SPEED , 15 , 90 , RobotMap.ROTATE_CREEP_SPEED));
-		addSequential(new DriveStraightDistance(RobotMap.DRIVE_SPEED,24,true));
+		addSequential(new DriveStraightDistance(RobotMap.DRIVE_SPEED,24));
 		addSequential(new ReturnToZero());
 		addSequential(new RotateToHeading(RobotMap.ROTATE_SPEED , 15 , -45 , RobotMap.ROTATE_CREEP_SPEED));
 		//drive to next crate

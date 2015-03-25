@@ -57,10 +57,20 @@ public class DriveToObject extends Command
 			targetRange = SmartDashboard.getNumber(targetRangeKey);
 			creepSpeed = SmartDashboard.getNumber(creepSpeedKey);
 		}
-		Robot.quadEncoder.reset();
-		Robot.gyroscope.reset();
+		ResetSensors();
 		isCreeping = false;
+		//in case the encode did not reset
+		neverMore += Robot.quadEncoder.getInches();
+		//let's check if the sonar is already readin something to close
+		//and only use nevermore if that's the case
+		if (Robot.rangeFinder.getRange() <= brakeRange/2) targetRange = 4;
 		previousRange = 0;
+	}
+
+	private void ResetSensors()
+	{
+		//Robot.gyroscope.reset();
+		//Robot.quadEncoder.reset();
 	}
 
 	protected void execute()

@@ -1,7 +1,6 @@
 package org.usfirst.frc.team1165.robot.commands;
 
 import org.usfirst.frc.team1165.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -10,55 +9,53 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class DriveStraightDistance extends Command
 {
-	private String forwardSpeedKey;
-	private String driveInchesKey;
-
 	private double forwardSpeed;
 	private double driveInches;
-	private boolean resetWhenFinished = false;
+	private double creepInches;
+	private double creepSpeed;
+	private String forwardSpeedKey;
+	private String driveInchesKey;
+	
+	private DriveStraightDistance()
+	{
+		requires(Robot.driveTrain);
+	}
 	
 	public DriveStraightDistance(String forwardSpeedKey, String driveInchesKey) 
 	{
-		requires(Robot.driveTrain);
-		requires(Robot.gyroscope);
-		requires(Robot.quadEncoder);
+		this();
 		this.forwardSpeedKey = forwardSpeedKey;
 		this.driveInchesKey = driveInchesKey;
 	}
 
 	public DriveStraightDistance(double forwardSpeed, double driveInches) 
 	{
-		requires(Robot.driveTrain);
-		requires(Robot.gyroscope);
-		requires(Robot.quadEncoder);
+		this();
 		this.forwardSpeed = forwardSpeed;
 		this.driveInches = driveInches;
-		forwardSpeedKey = null;
+		this.creepInches = driveInches + 1; //prevent this state
+		this.creepSpeed = forwardSpeed;
 	}
 
-	public DriveStraightDistance(double forwardSpeed, double driveInches, boolean resetWhenFinished) 
+	public DriveStraightDistance(double forwardSpeed, double driveInches, double creepSpeed, double creepInches) 
 	{
-		requires(Robot.driveTrain);
-		requires(Robot.gyroscope);
-		requires(Robot.quadEncoder);
+		this();
 		this.forwardSpeed = forwardSpeed;
 		this.driveInches = driveInches;
-		this.resetWhenFinished = resetWhenFinished;
-		forwardSpeedKey = null;
+		this.creepInches = creepInches;
+		this.creepSpeed = creepSpeed;
 	}
 
 	protected void initialize()
 	{
-		if (null != forwardSpeedKey)
+		if (forwardSpeedKey != null)
 		{
 			forwardSpeed = SmartDashboard.getNumber(forwardSpeedKey);
 			driveInches = SmartDashboard.getNumber(driveInchesKey);
+			creepInches = driveInches + 1; //prevent this state
+			creepSpeed = forwardSpeed;
 		}
-		ResetSensors();
-	}
-	
-	private void ResetSensors()
-	{
+		
 		Robot.gyroscope.reset();
 		Robot.quadEncoder.reset();
 	}
@@ -67,14 +64,19 @@ public class DriveStraightDistance extends Command
 	{
 		double twistCorrection = Robot.gyroscope.getTwistCorrection();
 		
-		Robot.driveTrain.driveCartesian(forwardSpeed, 0, twistCorrection, 0);
+		if (Math.abs(Robot.quadEncoder.getInches()) < driveInches-creepInches)
+		{
+			Robot.driveTrain.driveCartesian(forwardSpeed, 0, twistCorrection, 0);
+		}
+		else
+		{
+			Robot.driveTrain.driveCartesian(creepSpeed, 0, twistCorrection, 0);
+		}
 	}
  
 	protected boolean isFinished()
 	{
-		boolean finished = Math.abs(Robot.quadEncoder.getInches()) > Math.abs(driveInches);
-		if (finished && resetWhenFinished) ResetSensors();
-		return finished;
+		return Math.abs(Robot.quadEncoder.getInches()) > driveInches;
 	}
 
 	protected void end()

@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team1165.robot.commands.MoveContainerOutOfWay;
+import org.usfirst.frc.team1165.robot.commands.MoveRobotAndToteToAutoZone;
+import org.usfirst.frc.team1165.robot.commands.MoveRobotToAutoZone;
 import org.usfirst.frc.team1165.robot.commands.MoveRobotToAutoZoneWithSetTote;
 import org.usfirst.frc.team1165.robot.commands.MoveRobotAndContainerToAutoZone;
 import org.usfirst.frc.team1165.robot.commands.RotateAndStrafeToPushContainerOutOfWay;
@@ -45,6 +47,8 @@ public class Robot extends IterativeRobot
 	{
 		oi = new OI();
 		autoChooser = new SendableChooser();
+		autoChooser.addObject("Move Robot To Auto Zone", new MoveRobotToAutoZone(0.5,RobotMap.DISTANCE_TO_AUTO_ZONE, RobotMap.DRIVE_CREEP_SPEED, 30)); //"Auto Speed", "Auto Inches"));
+		autoChooser.addObject("Single Tote", new MoveRobotAndToteToAutoZone());
 		autoChooser.addObject("MoveRobotAndContainerToAutoZone", new MoveRobotAndContainerToAutoZone());
 		autoChooser.addObject("MoveRobotToAutoZoneWithSetTote", new MoveRobotToAutoZoneWithSetTote());
 		autoChooser.addDefault("MoveContainerOutOfWay", new MoveContainerOutOfWay());
